@@ -5,7 +5,7 @@
 
 var mongoose = require('mongoose')
 var uuid = require('uuid')
-var User = mongoose.model('User')
+var Users = mongoose.model('Users')
 
 /**
  * 是否有请求体
@@ -53,7 +53,7 @@ exports.hasToken = async (ctx, next) => {
     return next
   }
 
-  var user = await User.findOne({
+  var user = await Users.findOne({
     accessToken: accessToken
   })
     .exec()
