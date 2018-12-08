@@ -1,6 +1,6 @@
 'use strict'
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 /**
@@ -10,45 +10,46 @@ var Schema = mongoose.Schema;
  * 除了定义结构外，还定义文档的实例方法，静态模型方法，复合索引，中间件等
  * @type {mongoose}
  */
-var UserSchema = new Schema({
-  phoneNumber: {
-    unique: true,
-    type: String
-  },
-  areaCode: String,
-  verifyCode: String,
-  verified: {
-    type: Boolean,
-    default: false
-  },
-  accessToken: String,
-  nickname: String,
-  gender: String,
-  breed: String,
-  age: String,
-  avatar: String,
-  meta: {
-    createAt: {
-      type: Date,
-      dafault: Date.now()
+var UsersSchema = new Schema({
+    phoneNumber: {
+        unique: true,
+        type: String
     },
-    updateAt: {
-      type: Date,
-      dafault: Date.now()
+    areaCode: String,
+    verifyCode: String,
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    accessToken: String,
+    nickname: String,
+    gender: String,
+    breed: String,
+    age: String,
+    avatar: String,
+    meta: {
+        createAt: {
+            type: Date,
+            dafault: Date.now()
+        },
+        updateAt: {
+            type: Date,
+            dafault: Date.now()
+        }
     }
-  }
 })
 
 // Defines a pre hook for the document.
-UserSchema.pre('save', function(next) {
-  if (this.isNew) {
-    this.meta.createAt = this.meta.updateAt = Date.now()
-  }
-  else {
-    this.meta.updateAt = Date.now()
-  }
-  next()
+UsersSchema.pre('save', function(next) {
+    if (this.isNew) {
+        this.meta.createAt = this.meta.updateAt = Date.now()
+    }
+    else {
+        this.meta.updateAt = Date.now()
+    }
+    next()
 })
+
 
 /**
  * 定义模型User
@@ -56,6 +57,10 @@ UserSchema.pre('save', function(next) {
  * @type {[type]}
  */
 // 参数User 数据库中的集合名称, 不存在会创建.
-var User = mongoose.model('User', UserSchema)
+var Users = mongoose.model('Users', UsersSchema)
 
-module.exports = User
+module.exports = Users
+
+/**
+ * nodejs中文社区这篇帖子对mongoose的用法总结的不错：https://cnodejs.org/topic/548e54d157fd3ae46b233502
+ */
